@@ -10,7 +10,7 @@ Basic Launcher for my old Roblox Revival, feel free to use this I dont care. Qui
 # Tutorial
 
 Step 1:
-![image](https://imgur.com/a/2O83Dak.png)
+![image](https://imgur.com/a/2O83Dak)
 
 Edit the underlined "games" name to something like "RobloxPlayer" or something similar, it will be the protocol name in your browser for example: RobloxPlayer://username=JohnDoe
 

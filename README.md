@@ -10,13 +10,14 @@ Basic Launcher for my old Roblox Revival, feel free to use this I dont care. Qui
 # Tutorial
 
 Step 1:
+
 ![alt text](https://imgur.com/alpnc3O.png)
 
 Edit the underlined "games" name to something like "RobloxPlayer" or something similar, it will be the protocol name in your browser for example: RobloxPlayer://username=JohnDoe
 
 Step 2:
 
-![image](https://imgur.com/a/2O83Dak.png)
+![alt text](https://imgur.com/d9kgJc4.png)
 
 Modify this to your game path (preferrably AppData) and edit your url paramaters here, feel free to add more for IP etc
 

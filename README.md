@@ -21,6 +21,12 @@ Edit the underlined "games" name to something like "RobloxPlayer" or something s
 
 Modify this to your game path (preferrably AppData) and edit your url paramaters here, feel free to add more for IP etc
 
+**Step 2:**
+
+![alt text](https://imgur.com/rT2Avu1.png)
+
+Modify your PHP code (or other language) to accept the username parameter, for me im just making a basic HTML button that uses php to return the username to the protocol
+
 # Known Issues
 
 For some reason when joining a game your username ends with a forward slash "/" this will be fixed and updated but for now this works and is a basic guide on how to create this for your revival!

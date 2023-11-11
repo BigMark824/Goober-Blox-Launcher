@@ -30,3 +30,7 @@ Modify your PHP code (or other language) to accept the username parameter, for m
 # Known Issues
 
 For some reason when joining a game your username ends with a forward slash "/" this will be fixed and updated but for now this works and is a basic guide on how to create this for your revival!
+
+# Pull Requests
+
+Feel free to make them!

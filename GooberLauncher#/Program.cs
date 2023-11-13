@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 class Program
 {
@@ -12,9 +13,8 @@ class Program
         // Handle command-line arguments and launch the game
         if (args.Length > 0)
         {
-            string url = args[0];
-            string username = GetUsernameFromUrl(url);
-            LaunchGame(username);
+            (string username, int placeid, string ip, int port) = GetParametersFromUrl(args[0]);
+            LaunchGame(username, placeid, ip, port);
         }
         else
         {
@@ -22,44 +22,54 @@ class Program
         }
     }
 
-    static string GetUsernameFromUrl(string url)
+    static (string username, int placeid, string ip, int port) GetParametersFromUrl(string url)
     {
-        // Parse the URL to extract the username
-        // You may want to use a more sophisticated URL parsing method
-        // This is just a simple example
-        const string usernamePrefix = "username=";
-        int index = url.IndexOf(usernamePrefix);
-        if (index != -1)
-        {
-            return url.Substring(index + usernamePrefix.Length);
-        }
+        const string usernamePattern = "&username=(?<username>[^&]+)";
+        const string placeidPattern = "&placeid=(?<placeid>[^&/]+)";
+        const string ipPattern = "&ip=(?<ip>[^&/]+)";
+        const string portPattern = "&port=(?<port>[^&/]+)";
 
-        // Default to an empty string if the username is not found
-        return string.Empty;
+        Match usernameMatch = Regex.Match(url, usernamePattern);
+        Match placeidMatch = Regex.Match(url, placeidPattern);
+        Match ipMatch = Regex.Match(url, ipPattern);
+        Match portMatch = Regex.Match(url, portPattern);
+
+        string username = usernameMatch.Success ? usernameMatch.Groups["username"].Value : string.Empty;
+        int placeid = placeidMatch.Success && int.TryParse(placeidMatch.Groups["placeid"].Value, out int parsedPlaceid) ? parsedPlaceid : 0;
+        string ip = ipMatch.Success ? ipMatch.Groups["ip"].Value : string.Empty;
+        int port = portMatch.Success && int.TryParse(portMatch.Groups["port"].Value, out int parsedPort) ? parsedPort : 0;
+
+        return (username, placeid, ip, port);
     }
 
-    static void LaunchGame(string username)
+    static bool TryParseInt(string input, int startIndex, int length, out int result)
+    {
+        string substring = input.Substring(startIndex, length);
+        return int.TryParse(substring, out result);
+    }
+
+
+    static void LaunchGame(string username, int placeid, string ip, int port)
     {
         // Add your game launch logic here
-        // Use the 'username' variable in your game launch parameters
-        Console.WriteLine($"Launching game for username: {username}");
+        // Use the provided parameters in your game launch
 
-        // Here, you would launch your game with the specified arguments
+        Console.WriteLine($"Launching game for username: {username}, placeid: {placeid}, ip: {ip}, port: {port}");
+
         // Replace the placeholders with your actual game executable path and arguments
-        string gameExecutablePath = @"C:\2014M\RobloxPlayerBeta.exe";
-        string gameArguments = $"-a\"http://localhost/www.civdefn.tk/\" -j\"http://localhost/www.civdefn.tk/game/join.php?port=2005&username={username}&app=1&ip=127.0.0.1&id=0&mode=0\" -t \"1\\";
+        string gameExecutablePath = @"C:\2015\RobloxPlayerBeta.exe";
+        string gameArguments = $"-a\"http://localhost/login/negotiate.ashx\" -j\"http://localhost/game/placelaunchrrr.php/?placeid={placeid}&ip={ip}&port={port}&id=0&app=0&user={username}\" -t \"1\\";
 
         // Start the game process
         Process.Start(gameExecutablePath, gameArguments);
-
+        Console.ReadLine();
     }
-
     static void RegisterProtocol()
     {
         try
         {
             // Replace 'game' with your custom protocol name
-            string protocolName = "games";
+            string protocolName = "goober-player";
             string executablePath = Process.GetCurrentProcess().MainModule.FileName;
 
             using (RegistryKey key = Registry.ClassesRoot.CreateSubKey(protocolName))

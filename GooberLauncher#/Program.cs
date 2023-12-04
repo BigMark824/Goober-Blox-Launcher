@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -7,10 +7,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Register the protocol when the application is run
         RegisterProtocol();
 
-        // Handle command-line arguments and launch the game
         if (args.Length > 0)
         {
             (string username, int placeid, string ip, int port) = GetParametersFromUrl(args[0]);
@@ -48,27 +46,21 @@ class Program
         return int.TryParse(substring, out result);
     }
 
-
     static void LaunchGame(string username, int placeid, string ip, int port)
     {
-        // Add your game launch logic here
-        // Use the provided parameters in your game launch
-
         Console.WriteLine($"Launching game for username: {username}, placeid: {placeid}, ip: {ip}, port: {port}");
 
-        // Replace the placeholders with your actual game executable path and arguments
         string gameExecutablePath = @"C:\2015\RobloxPlayerBeta.exe";
         string gameArguments = $"-a\"http://localhost/login/negotiate.ashx\" -j\"http://localhost/game/placelaunchrrr.php/?placeid={placeid}&ip={ip}&port={port}&id=0&app=0&user={username}\" -t \"1\\";
 
-        // Start the game process
         Process.Start(gameExecutablePath, gameArguments);
         Console.ReadLine();
     }
+
     static void RegisterProtocol()
     {
         try
         {
-            // Replace 'game' with your custom protocol name
             string protocolName = "goober-player";
             string executablePath = Process.GetCurrentProcess().MainModule.FileName;
 
